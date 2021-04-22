@@ -1,26 +1,35 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "jsx": "react-jsx",
     "lib": [
       "dom",
-      "dom.iterable",
-      "esnext"
+      "es7",
+      "ES2019",
+      "es2020"
     ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ],
+    "module": "CommonJS",
     "moduleResolution": "node",
+    "target": "es2015",
+    "downlevelIteration": true,
+    "allowJs": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "esModuleInterop": true,
+    "charset": "utf8",
+    "baseUrl": "./",
+    "paths": {
+      "~/*": [
+        "./src/*"
+      ]
+    },
+    "outDir": "./dist"
   },
   "include": [
-    "src"
+    "./src/**/*",
+    "./tests/**/*",
+    "types"
   ]
 }
