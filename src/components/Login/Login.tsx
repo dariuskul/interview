@@ -11,14 +11,38 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [validForm,setValidForm] = useState({errors: []});
+
+
+
+const handleValidation = () => {
+  let user = username;
+  let pass = password;
+  let errors = [];
+  let isValid = true;
+  if(!user){
+    errors.push("Username cannot be empty");
+    isValid = false;
+  }
+  if(!pass){
+    errors.push("Password cannot be empty");
+    isValid = false;
+  }
+  setValidForm({errors: errors})
+
+  return isValid;
+
+}
 
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorMessage(null);
+    try {  
+      if(handleValidation()){
+        await login(username, password);
+        push(Routes.Users);
+      }
 
-    try {
-      await login(username, password);
-      push(Routes.Users);
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -30,13 +54,17 @@ const Login = () => {
         <h1 className="text-center">
           Mygom.tech
         </h1>
+        {validForm.errors? validForm.errors.map((error)=>
+          <div className="validation-errors">
+            <span className="validation-error">{error}</span>
+          </div>
+      ) : ''}
         <input
           value={username}
           onChange={(event) => setUsername(event.target.value)}
           placeholder="Username"
           type="text"
           className="input mt-52px"
-          required
         />
         <input
           value={password}
@@ -44,7 +72,6 @@ const Login = () => {
           placeholder="Password"
           type="password"
           className="input mt-24px"
-          required
         />
         <ErrorBlock error={errorMessage}/>
         <button type="submit" className="button mt-24px">
