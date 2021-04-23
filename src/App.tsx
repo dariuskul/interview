@@ -9,6 +9,9 @@ import { UserContextProvider } from './components/UserContext';
 
 import './style/styles.scss';
 //localStorage.clear()
+
+
+
 const App = () => (
   <Router>
     <Switch>

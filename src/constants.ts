@@ -4,6 +4,7 @@ export enum Routes {
   Weak = '/items/weak',
   Reused = '/items/reused',
   Root = '/',
+  Old = '/items/old'
 }
 
 export enum API {

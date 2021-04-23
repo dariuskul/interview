@@ -1,4 +1,7 @@
 import {useEffect, useState} from 'react';
+import itemHasOldPassword from '~/utils/ItemHasOldPassword';
+import itemHasReusedPassword from '~/utils/itemHasReusedPassword';
+import itemHasWeakPassword from '~/utils/itemHasWeakPassword';
 import getUserItems, {IItem} from '../../services/getUserItems';
 
 const userItemsProvider = () => {
@@ -22,10 +25,17 @@ const userItemsProvider = () => {
     })()
   }, []);
 
+
+  const reusedItems = items.filter((item) => itemHasReusedPassword(item,items))
+
+  const oldItems = items.filter((item) => itemHasOldPassword(item,items))
+  const weakPasswords = items.filter((item) => itemHasWeakPassword(item,items))
+
+
   return {
     isLoading,
     errorMessage,
-    items,
+    itemsObject: [items,oldItems,reusedItems,weakPasswords],
   }
 };
 

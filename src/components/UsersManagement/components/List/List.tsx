@@ -60,7 +60,7 @@ const List: FC<IList> = ({items}) => (
   <ul className="list">
     {
       items.map((item) => (
-        <li className="item">
+        <li key={item.id} className="item">
           <ItemIcon name={item.name}/>
           <div>
             <div className="title">

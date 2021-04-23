@@ -7,7 +7,7 @@ import logout from '../../../../services/logout';
 import './header-style.scss';
 
 interface IHeader {
-  items: Array<IItem>;
+  items: Array<Array<IItem>>;
   username: string;
 }
 
@@ -20,16 +20,14 @@ const Header: FC<IHeader> = ({items, username}) => {
       alert(error)
     }
     history.push(Routes.Login)
-
-
   }
-
+  let wrongEmails = items[3].length + items[2].length;
   return (
     <div className="header">
       <div className="user-section">
         <button onClick={handleLogOut}>{`Logout ${username}`}</button>
       </div>
-      <h1>{`${items.length} Emails are wrong`}</h1>
+      <h1>{`${wrongEmails} Emails are wrong (Reused)`}</h1>
       <span>Email validator to protect your company from bad registrations</span>
     </div>
   )
