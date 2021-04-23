@@ -36,6 +36,7 @@ const Login = () => {
           placeholder="Username"
           type="text"
           className="input mt-52px"
+          required
         />
         <input
           value={password}
@@ -43,6 +44,7 @@ const Login = () => {
           placeholder="Password"
           type="password"
           className="input mt-24px"
+          required
         />
         <ErrorBlock error={errorMessage}/>
         <button type="submit" className="button mt-24px">
