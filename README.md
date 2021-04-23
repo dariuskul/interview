@@ -1,4 +1,4 @@
-# Interview task Password Health
+# Interview task User management
 
 ## How to start
 * create a GitHub project from the template by clicking `Use this template` and filling the information required 
