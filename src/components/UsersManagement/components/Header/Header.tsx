@@ -17,7 +17,7 @@ const Header: FC<IHeader> = ({items, username}) => {
     try {
       await logout();
     } catch (error) {
-      alert(error)
+      alert(error);
     }
     history.push(Routes.Login)
   }
@@ -27,7 +27,7 @@ const Header: FC<IHeader> = ({items, username}) => {
       <div className="user-section">
         <button onClick={handleLogOut}>{`Logout ${username}`}</button>
       </div>
-      <h1>{`${wrongEmails} Emails are wrong (Reused)`}</h1>
+      <h1>{`${wrongEmails} Emails are wrong or reused`}</h1>
       <span>Email validator to protect your company from bad registrations</span>
     </div>
   )

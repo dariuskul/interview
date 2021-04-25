@@ -27,7 +27,6 @@ const userItemsProvider = () => {
     }
 
     fetchData();
-    console.log(update)
   },[update]);
 
   const reusedItems = items.filter((item) => itemHasReusedPassword(item,items))

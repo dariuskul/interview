@@ -3,7 +3,6 @@ import {IItem} from "~/services/getUserItems";
 import ItemIcon from './components/ItemIcon';
 import updateItem from '../../../../services/updateItem';
 import Modal from 'react-modal';
-
 import './list-style.scss';
 
 interface IList {
@@ -19,7 +18,7 @@ interface IUpdateModal {
 const UpdateModal: FC<IUpdateModal> = ({ item,update }) => {
   const [showModal, setShowModal] = useState(false);
   const [newEmail, setNewEmail] = useState('');
-
+  const [validForm,setValidForm] = useState({errors: []});
 
 
   const handleSubmit = async() => {
@@ -31,7 +30,6 @@ const UpdateModal: FC<IUpdateModal> = ({ item,update }) => {
       alert(error)
     }
   }
-
   return (
     <>
       <button className="update" onClick={() => setShowModal(true)}>
@@ -48,14 +46,12 @@ const UpdateModal: FC<IUpdateModal> = ({ item,update }) => {
           placeholder="new password"
           className="input"
           value={newEmail}
-          onChange={(event) => setNewEmail(event.target.value)} 
           required
+          onChange={(event) => setNewEmail(event.target.value)} 
         />
         <div className="pt-12px text-center">
-          <button className="button" onClick={handleSubmit}>Change</button>
-          <button className="button ml-12px" onClick={() => {
-            setShowModal(false)
-          }}>
+          <button className="button" type="submit" onClick={handleSubmit}>Change</button>
+          <button className="button ml-12px" onClick={() => {setShowModal(false)}}>
             Cancel
           </button>
         </div>

@@ -11,8 +11,7 @@ const logout = async() => {
         }
       });
       localStorage.removeItem('token')
-      const data = await response.json();
-      return data;
+      return response;
 };
 
 export default logout;

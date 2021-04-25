@@ -8,6 +8,9 @@ const login = async (username: string, password: string) => {
   });
 
   const response = await fetch(url);
+  if(response.status > 400){
+    throw new Error('Credentials invalid')
+  }
   const data = await response.json();
   const { token } = data;
 

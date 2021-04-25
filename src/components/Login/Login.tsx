@@ -3,6 +3,7 @@ import {useHistory} from 'react-router-dom';
 import {Routes} from '~/constants';
 import login from '~/services/login';
 import ErrorBlock from '../ErrorBlock';
+import LoadingScreen from '../LoadingScreen';
 
 import './login-style.scss';
 
@@ -12,7 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState<string>();
   const [validForm,setValidForm] = useState({errors: []});
-
+  const [loading, setLoading] = useState(false);
 
 
 const handleValidation = () => {
@@ -37,8 +38,10 @@ const handleValidation = () => {
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorMessage(null);
+    setLoading(true);
     try {  
       if(handleValidation()){
+        setValidForm({errors: []})
         await login(username, password);
         push(Routes.Users);
       }
@@ -46,6 +49,8 @@ const handleValidation = () => {
     } catch (error) {
       setErrorMessage(error.message);
     }
+
+    setLoading(false);
   };
 
   return (
@@ -54,11 +59,6 @@ const handleValidation = () => {
         <h1 className="text-center">
           Mygom.tech
         </h1>
-        {validForm.errors? validForm.errors.map((error)=>
-          <div className="validation-errors">
-            <span className="validation-error">{error}</span>
-          </div>
-      ) : ''}
         <input
           value={username}
           onChange={(event) => setUsername(event.target.value)}
@@ -74,9 +74,16 @@ const handleValidation = () => {
           className="input mt-24px"
         />
         <ErrorBlock error={errorMessage}/>
+
+        {validForm.errors? validForm.errors.map((error)=>
+          <div className="validation-errors">
+            <span className="validation-error">{error}</span>
+          </div>
+      ) : ''}
+        {loading ? <LoadingScreen/> :
         <button type="submit" className="button mt-24px">
           Login
-        </button>
+        </button>}
       </form>
     </div>
   )
