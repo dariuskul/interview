@@ -8,15 +8,29 @@ import './list-style.scss';
 
 interface IList {
   items: Array<IItem>,
+  update?: React.Dispatch<any>
 }
 
 interface IUpdateModal {
   item: IItem;
+  update?: React.Dispatch<any>
 }
 
-const UpdateModal: FC<IUpdateModal> = ({ item }) => {
+const UpdateModal: FC<IUpdateModal> = ({ item,update }) => {
   const [showModal, setShowModal] = useState(false);
   const [newEmail, setNewEmail] = useState('');
+
+
+
+  const handleSubmit = async() => {
+    try {
+      await updateItem({...item, email: newEmail})
+      setShowModal(false);
+      update(new Date())
+    } catch (error) {
+      alert(error)
+    }
+  }
 
   return (
     <>
@@ -35,16 +49,10 @@ const UpdateModal: FC<IUpdateModal> = ({ item }) => {
           className="input"
           value={newEmail}
           onChange={(event) => setNewEmail(event.target.value)} 
+          required
         />
         <div className="pt-12px text-center">
-          <button className="button" onClick={async () => {
-            await updateItem({
-              ...item,
-              email: newEmail,
-            })
-
-            window.location.reload();
-          }}>Change</button>
+          <button className="button" onClick={handleSubmit}>Change</button>
           <button className="button ml-12px" onClick={() => {
             setShowModal(false)
           }}>
@@ -56,7 +64,7 @@ const UpdateModal: FC<IUpdateModal> = ({ item }) => {
   );
 }
 
-const List: FC<IList> = ({items}) => (
+const List: FC<IList> = ({items,update}) => (
   <ul className="list">
     {
       items.map((item) => (
@@ -70,7 +78,7 @@ const List: FC<IList> = ({items}) => (
               {item.email}
             </div>
           </div>
-          <UpdateModal item={item} />
+          <UpdateModal item={item} update={update} />
         </li>
       ))
     }

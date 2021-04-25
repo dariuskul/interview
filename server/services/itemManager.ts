@@ -1,18 +1,18 @@
 import { employees } from '../data';
 
-let items = [];
 
+
+// Hashmap, stores only most recent updates of the item object. 
+let items = new Map();
 export const updateItem = (item) => {
-  items.map((userItem)=>{
-    userItem.id === item.id ? items.splice(items.indexOf(item)) : '';
-  })
-  items.push(item);
+  items.has(item.id) ? items.delete(item.id) : null;
+
+  items.set(item.id, item)
 };
 
 export const getItems = () => {
-  console.log(items)
   return employees.map((userItem) => {
-    const updatedItem = items.find(({ id }) => id === userItem.id);
+    const updatedItem = items.get(userItem.id)
 
     return {
       ...(updatedItem || userItem),

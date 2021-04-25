@@ -23,7 +23,7 @@ const UsersManagement = () => {
   const {
     isLoading,
     errorMessage,
-    itemsObject
+    itemsObject,setUpdate
   } = useItemsProvider();
 
   //Case when server was restarted and user was still logged in, we remove tokens
@@ -47,16 +47,16 @@ const UsersManagement = () => {
       <Filter items={itemsObject}/>
       <Switch>
         <Route exact path={Routes.Users}>
-          <List items={itemsObject[0]}/>
+          <List items={itemsObject[0]} update={setUpdate}/>
         </Route>
         <Route path={Routes.Weak}>
-          <List items={itemsObject[3]}/>
+          <List items={itemsObject[3]} update={setUpdate}/>
         </Route>
         <Route path={Routes.Reused}>
-          <List items={itemsObject[2]}/>
+          <List items={itemsObject[2]} update={setUpdate}/>
         </Route>
         <Route path={Routes.Old}>
-          <List items={itemsObject[1]} />
+          <List items={itemsObject[1]} update={setUpdate}/>
         </Route>
       </Switch>
     </div>

@@ -8,9 +8,11 @@ const userItemsProvider = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<String>();
   const [items, setItems] = useState<Array<IItem>>([])
+  const [update,setUpdate] = useState(false);
 
   useEffect(() => {
-    (async () => {
+
+    const fetchData = async() =>{
       setIsLoading(true);
 
       try {
@@ -22,9 +24,11 @@ const userItemsProvider = () => {
       }
 
       setIsLoading(false);
-    })()
-  }, []);
+    }
 
+    fetchData();
+    console.log(update)
+  },[update]);
 
   const reusedItems = items.filter((item) => itemHasReusedPassword(item,items))
 
@@ -36,6 +40,7 @@ const userItemsProvider = () => {
     isLoading,
     errorMessage,
     itemsObject: [items,oldItems,reusedItems,weakPasswords],
+    setUpdate
   }
 };
 
