@@ -1,9 +1,11 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { API } from '~/constants';
-import getUrl from '~/utils/getUrl';
+import { createContext, useContext, useEffect, useState } from "react";
+import { getUserInfo } from "~/api";
+import { API } from "~/constants";
+import { useIsMounted } from "~/helpers/useIsMounted";
+import getUrl from "~/utils/getUrl";
 
 interface IUser {
-  updateUser: () => void;
+  getUserData: () => void;
   deleteData: () => void;
   errorMessage: string;
   isLoading: boolean;
@@ -13,7 +15,7 @@ interface IUser {
 }
 
 const UserContext = createContext<IUser>({
-  updateUser: () => {},
+  getUserData: () => {},
   deleteData: () => {},
   errorMessage: null,
   isLoading: true,
@@ -24,26 +26,19 @@ const UserContext = createContext<IUser>({
 
 export const useUserContext = () => useContext(UserContext);
 
-export const UserContextProvider = ({ children }) => {
+export const UserContextProvider = ({ children }): JSX.Element => {
   const [errorMessage, setErrorMessage] = useState<string>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [username, setUsername] = useState<string>(null);
   const [email, setEmail] = useState<string>(null);
   const [id, setId] = useState<string>(null);
+  const isMounted = useIsMounted();
 
-  const updateUser = async () => {
+  const getUserData = async () => {
     setErrorMessage(null);
     setIsLoading(true);
-
     try {
-      const response = await fetch(getUrl(API.User), {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        }
-      });
-
-      const data = await response.json();
-
+      const data = await getUserInfo();
       setUsername(data?.username);
       setEmail(data?.email);
       setId(data?.id);
@@ -52,7 +47,7 @@ export const UserContextProvider = ({ children }) => {
     }
 
     setIsLoading(false);
-  }
+  };
 
   const deleteData = () => {
     setErrorMessage(null);
@@ -63,11 +58,11 @@ export const UserContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-   updateUser();
+    if (isMounted) getUserData();
   }, []);
 
   const value = {
-    updateUser,
+    getUserData,
     deleteData,
     errorMessage,
     isLoading,
@@ -76,11 +71,7 @@ export const UserContextProvider = ({ children }) => {
     id,
   };
 
-  return (
-    <UserContext.Provider value={value}>
-      {children}
-    </UserContext.Provider>
-  )
-}
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+};
 
 export default UserContext;

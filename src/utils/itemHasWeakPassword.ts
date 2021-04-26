@@ -1,11 +1,11 @@
-import {IItem} from "~/services/getUserItems";
+import {IItem} from "../types/item";
 
 const itemHasWeakPassword = (item: IItem, itemList: Array<IItem>) => {
-  const weahPasswords = itemList.filter((listItem) => (
+  const weakPasswords = itemList.filter((listItem) => (
     !item.email.match(/^[^\s@]+@[^\s@]+.[^\s@]+$/)
   ))
 
-  return weahPasswords.length > 1;
+  return weakPasswords.length > 1;
 };
 
 export default itemHasWeakPassword;

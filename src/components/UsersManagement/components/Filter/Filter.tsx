@@ -1,10 +1,7 @@
 import { FC } from 'react';
 import { Routes } from "~/constants";
-import { IItem } from "~/services/getUserItems";
-import itemHasOldPassword from '~/utils/ItemHasOldPassword';
-import itemHasReusedPassword from '~/utils/itemHasReusedPassword';
+import { IItem } from "~/types/item";
 import FilterTab from "./components/FilterTab"
-
 import './filter-style.scss';
 
 interface IFilter {

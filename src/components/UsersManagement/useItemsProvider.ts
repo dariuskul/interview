@@ -1,18 +1,19 @@
-import {useEffect, useState} from 'react';
-import itemHasOldPassword from '~/utils/ItemHasOldPassword';
-import itemHasReusedPassword from '~/utils/itemHasReusedPassword';
-import itemHasWeakPassword from '~/utils/itemHasWeakPassword';
-import getUserItems, {IItem} from '../../services/getUserItems';
+import { useEffect, useRef, useState } from "react";
+import { IItem } from "~/types/item";
+import itemHasOldPassword from "~/utils/ItemHasOldPassword";
+import itemHasReusedPassword from "~/utils/itemHasReusedPassword";
+import itemHasWeakPassword from "~/utils/itemHasWeakPassword";
+import getUserItems from "../../services/getUserItems";
 
 const userItemsProvider = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<String>();
-  const [items, setItems] = useState<Array<IItem>>([])
-  const [update,setUpdate] = useState(false);
-
+  const [items, setItems] = useState<Array<IItem>>([]);
+  const [update, setUpdate] = useState(false);
+  const isMountedVal = useRef(0);
   useEffect(() => {
-
-    const fetchData = async() =>{
+    isMountedVal.current = 1;
+    const fetchData = async () => {
       setIsLoading(true);
 
       try {
@@ -24,23 +25,30 @@ const userItemsProvider = () => {
       }
 
       setIsLoading(false);
-    }
+    };
 
     fetchData();
-  },[update]);
 
-  const reusedItems = items.filter((item) => itemHasReusedPassword(item,items))
+    return () => {
+      isMountedVal.current = 0;
+    };
+  }, [update]);
 
-  const oldItems = items.filter((item) => itemHasOldPassword(item,items))
-  const weakPasswords = items.filter((item) => itemHasWeakPassword(item,items))
+  const reusedItems = items.filter((item) =>
+    itemHasReusedPassword(item, items)
+  );
 
+  const oldItems = items.filter((item) => itemHasOldPassword(item, items));
+  const weakPasswords = items.filter((item) =>
+    itemHasWeakPassword(item, items)
+  );
 
   return {
     isLoading,
     errorMessage,
-    itemsObject: [items,oldItems,reusedItems,weakPasswords],
-    setUpdate
-  }
+    itemsObject: [items, oldItems, reusedItems, weakPasswords],
+    setUpdate,
+  };
 };
 
 export default userItemsProvider;

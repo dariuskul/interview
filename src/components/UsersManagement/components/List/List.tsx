@@ -1,5 +1,5 @@
 import {FC, useState} from 'react';
-import {IItem} from "~/services/getUserItems";
+import { IItem } from "~/types/item";
 import ItemIcon from './components/ItemIcon';
 import updateItem from '../../../../services/updateItem';
 import Modal from 'react-modal';
