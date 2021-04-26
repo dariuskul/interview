@@ -4,9 +4,9 @@ import ErrorBlock from "../ErrorBlock";
 import Filter from "./components/Filter/Filter";
 import LoadingScreen from "../LoadingScreen";
 import Header from "./components/Header/Header";
-import { Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { Routes } from "~/constants";
-import { useUserContext } from "../UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 
 const UsersManagement = () => {
   const {

@@ -14,12 +14,12 @@ describe("Login", () => {
 
     const usernameInput = getByLabelText("username");
     const passwordInput = getByLabelText("password");
-    expect(usernameInput.value).toEqual("");
-    expect(passwordInput.value).toEqual("");
+    expect((usernameInput as HTMLInputElement).value).toEqual("");
+    expect((passwordInput as HTMLInputElement).value).toEqual("");
 
     fireEvent.change(usernameInput, { target: { value: "test" } });
     fireEvent.change(passwordInput, { target: { value: "testPassword" } });
-    expect(usernameInput.value).toMatch("test");
-    expect(passwordInput.value).toMatch("testPassword");
+    expect((usernameInput as HTMLInputElement).value).toMatch("test");
+    expect((passwordInput as HTMLInputElement).value).toMatch("testPassword");
   });
 });

@@ -7,3 +7,12 @@ export interface IItem {
   email: string;
   createdAt: string;
 }
+interface IList {
+  items: Array<IItem>;
+  update?: React.Dispatch<any>;
+}
+
+interface IUpdateModal {
+  item: IItem;
+  update?: React.Dispatch<any>;
+}

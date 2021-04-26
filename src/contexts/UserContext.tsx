@@ -1,18 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getUserInfo } from "~/api";
-import { API } from "~/constants";
 import { useIsMounted } from "~/helpers/useIsMounted";
-import getUrl from "~/utils/getUrl";
-
-interface IUser {
-  getUserData: () => void;
-  deleteData: () => void;
-  errorMessage: string;
-  isLoading: boolean;
-  username: string;
-  email: string;
-  id: string;
-}
 
 const UserContext = createContext<IUser>({
   getUserData: () => {},

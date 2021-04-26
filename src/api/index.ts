@@ -57,3 +57,16 @@ export const getUserInfo = async () => {
 
   return data;
 };
+
+export const updateRequest = async (item: IItem) => {
+  const response = fetch(getUrl(API.Items), {
+    method: "POST",
+    body: JSON.stringify(item),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  return await response;
+};

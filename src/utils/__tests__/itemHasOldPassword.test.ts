@@ -23,10 +23,19 @@ const items: Array<IItem> = [
     role: Roles.read,
     createdAt: new Date().toISOString(),
   },
+  {
+    name: "Kestas",
+    email: "test1@test.com",
+    role: Roles.read,
+    createdAt: new Date(
+      new Date().setMonth(new Date().getMonth() - 10)
+    ).toISOString(),
+  },
 ];
 
 test("should return true if the email is old", () => {
   expect(itemHasOldPassword(items[1], items)).toBe(true);
   expect(itemHasOldPassword(items[0], items)).toBe(false);
   expect(itemHasOldPassword(items[2], items)).toBe(false);
+  expect(itemHasOldPassword(items[3], items)).toBe(true);
 });

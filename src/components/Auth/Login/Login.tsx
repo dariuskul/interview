@@ -59,6 +59,8 @@ const Login = () => {
     setLoading(false);
   };
 
+  const handleChange = () => {};
+
   return (
     <div className="login-page">
       <form className="login-form" onSubmit={handleSubmit}>
